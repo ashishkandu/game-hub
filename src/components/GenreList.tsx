@@ -1,9 +1,13 @@
 import { Button, HStack, Image, List, ListItem } from '@chakra-ui/react';
-import useGenres from '../hooks/useGenres';
+import useGenres, { Genre } from '../hooks/useGenres';
 import getCroppedImageUrl from '../services/image-urls';
 import GenreListItemSkeleton from './GenreListItemSkeleton';
 
-const GenreList = () => {
+interface Props {
+  onSelectGenre: (genre: Genre) => void;
+}
+
+const GenreList = ({ onSelectGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
   const skeletons = [...Array(20).keys()];
 
@@ -17,7 +21,6 @@ const GenreList = () => {
         <ListItem key={genre.id} paddingY="5px">
           <HStack>
             <Button
-              textOverflow="revert"
               justifyContent="space-between"
               leftIcon={
                 <Image
@@ -26,7 +29,7 @@ const GenreList = () => {
                   src={getCroppedImageUrl(genre.image_background)}
                 />
               }
-              onClick={() => console.log(genre)}
+              onClick={() => onSelectGenre(genre)}
               fontSize="lg"
               variant="link"
             >
