@@ -5,9 +5,10 @@ import GenreListItemSkeleton from './GenreListItemSkeleton';
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
   const skeletons = [...Array(20).keys()];
 
@@ -21,6 +22,7 @@ const GenreList = ({ onSelectGenre }: Props) => {
         <ListItem key={genre.id} paddingY="5px">
           <HStack>
             <Button
+              fontWeight={genre.id === selectedGenre?.id ? 'bold' : 'normal'}
               justifyContent="space-between"
               leftIcon={
                 <Image
